@@ -1,6 +1,6 @@
 package me.pigalala.pigstops;
 
-import me.makkuusen.timing.system.TPlayer;
+import me.makkuusen.timing.system.tplayer.TPlayer;
 import me.pigalala.pigstops.pit.management.PitGame;
 import me.pigalala.pigstops.pit.management.pitmodes.Pit;
 import net.kyori.adventure.text.Component;
@@ -31,7 +31,7 @@ public class OinkMessages {
 
     public static TextComponent getRaceFinishText(TPlayer player, String pitName, int pit, String time, int accuracy, int misclicks, Pit.PitMode pm) {
         return Component.text().content("").color(NamedTextColor.GREEN)
-                .append(Component.text("|| ", player.getTextColor(), TextDecoration.BOLD, TextDecoration.ITALIC))
+                .append(Component.text("|| ", player.getSettings().getTextColor(), TextDecoration.BOLD, TextDecoration.ITALIC))
                 .append(Component.text(player.getName(), NamedTextColor.WHITE))
                 .append(Component.text(" has completed PigStop "))
                 .append(Component.text(pit).color(NamedTextColor.GOLD))
@@ -39,7 +39,7 @@ public class OinkMessages {
                 .append(Component.text(time).color(NamedTextColor.GOLD))
                 .hoverEvent(
                         Component.text().content("").color(TextColor.color(0xF38AFF))
-                        .append(Component.text("|| ", player.getTextColor(), TextDecoration.BOLD, TextDecoration.ITALIC))
+                        .append(Component.text("|| ", player.getSettings().getTextColor(), TextDecoration.BOLD, TextDecoration.ITALIC))
                         .append(Component.text(player.getName(), NamedTextColor.WHITE))
                         .appendNewline().append(Component.text("----------").color(NamedTextColor.GRAY))
                         .appendNewline().append(Component.text(pitName)).append(Component.text(".pigstop").color(NamedTextColor.GRAY))

@@ -1,16 +1,15 @@
 package me.pigalala.pigstops;
 
-import me.pigalala.pigstops.pit.management.PitGame;
-import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
+import static me.pigalala.pigstops.PigStops.defaultPitGame;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 
-import static me.pigalala.pigstops.PigStops.defaultPitGame;
-import static me.pigalala.pigstops.PigStops.pitGames;
+import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+
+import me.pigalala.pigstops.pit.management.PitGame;
 
 public abstract class OinkConfig {
 

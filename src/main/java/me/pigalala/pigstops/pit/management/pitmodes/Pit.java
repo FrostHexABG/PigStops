@@ -3,11 +3,11 @@ package me.pigalala.pigstops.pit.management.pitmodes;
 import co.aikar.commands.BukkitCommandExecutionContext;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.contexts.ContextResolver;
-import me.makkuusen.timing.system.TPlayer;
 import me.makkuusen.timing.system.api.TimingSystemAPI;
-import me.makkuusen.timing.system.event.EventDatabase;
+import me.makkuusen.timing.system.database.EventDatabase;
 import me.makkuusen.timing.system.heat.Heat;
 import me.makkuusen.timing.system.participant.Driver;
+import me.makkuusen.timing.system.tplayer.TPlayer;
 import me.pigalala.pigstops.OinkMessages;
 import me.pigalala.pigstops.PigStops;
 import me.pigalala.pigstops.PitPlayer;
@@ -131,7 +131,8 @@ public abstract class Pit implements Listener {
         spectators.forEach(p -> p.pit = this);
     }
 
-    private void setItemMetas() {
+    @SuppressWarnings("deprecation")
+	private void setItemMetas() {
         ItemMeta backgroundMeta = defaultBackground.getItemMeta();
         backgroundMeta.setDisplayName(" ");
         defaultBackground.setItemMeta(backgroundMeta);
@@ -170,7 +171,8 @@ public abstract class Pit implements Listener {
         }
     }
 
-    @EventHandler
+    @SuppressWarnings("deprecation")
+	@EventHandler
     public void itemClickedEvent(InventoryClickEvent e) {
         if(e.getWhoClicked() != pp.getPlayer() || !e.getView().getTitle().startsWith("§dPigStops")) return;
         e.setCancelled(true);
@@ -223,7 +225,7 @@ public abstract class Pit implements Listener {
             if(pp.getPlayer().getVehicle() instanceof Boat b) b.remove();
             pp.practiceModeStart.setPitch(pp.getPlayer().getLocation().getPitch());
             TPlayer tPlayer = TimingSystemAPI.getTPlayer(pp.getPlayer().getUniqueId());
-            Boat boat = spawnBoat(pp.practiceModeStart, tPlayer.getBoat(), tPlayer.isChestBoat());
+            Boat boat = spawnBoat(pp.practiceModeStart, tPlayer.getSettings().getBoat(), tPlayer.getSettings().isChestBoat());
             boat.addPassenger(pp.getPlayer());
         }
     }

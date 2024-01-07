@@ -4,7 +4,11 @@ import com.destroystokyo.paper.event.player.PlayerStopSpectatingEntityEvent;
 import me.makkuusen.timing.system.api.TimingSystemAPI;
 import me.pigalala.pigstops.pit.management.pitmodes.Pit;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+
+import java.util.logging.Level;
+
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,8 +50,14 @@ public class OinkListener implements Listener {
         } else {
             if(pp.isInPracticeMode()) pp.togglePracticeMode();
         }
-
-        if(driver.get().getHeat().isActive() && driver.get().getCurrentLap() != null && !driver.get().getCurrentLap().isPitted()) pp.newPit(Pit.Type.REAL);
+        
+        // Prevent NullPointerException if no default pit game has been selected.
+        if (PigStops.defaultPitGame == null) {
+        	PigStops.getPlugin().getLogger().log(Level.SEVERE, "The default pit game has not been set. PigStops will not work correctly until a default pit game is set.");
+        	e.getPlayer().sendMessage(Component.text().append(Component.text("The PigStop did not work as the default pit game is not set. Please ask an administrator to set the default pit game.", NamedTextColor.RED)));
+        } else {
+        	 if(driver.get().getHeat().isActive() && driver.get().getCurrentLap() != null && !driver.get().getCurrentLap().isPitted()) pp.newPit(Pit.Type.REAL);
+        }      
     }
 
     @EventHandler

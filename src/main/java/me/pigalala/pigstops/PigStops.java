@@ -1,15 +1,21 @@
 package me.pigalala.pigstops;
 
-import co.aikar.commands.PaperCommandManager;
-import com.google.common.collect.ImmutableList;
-import me.pigalala.pigstops.pit.management.PitGame;
-import me.pigalala.pigstops.pit.management.pitmodes.Pit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import com.google.common.collect.ImmutableList;
+
+import co.aikar.commands.PaperCommandManager;
+import me.pigalala.pigstops.pit.management.PitGame;
+import me.pigalala.pigstops.pit.management.pitmodes.Pit;
 
 public final class PigStops extends JavaPlugin {
 
@@ -27,6 +33,8 @@ public final class PigStops extends JavaPlugin {
         new OinkListener();
         OinkConfig.onStartup();
         setupCommands();
+        getLogger().log(Level.INFO, "Enabled PigStops v" + getPluginMeta().getVersion() + " created by Pigalala.");
+        getLogger().log(Level.INFO, "PigStops is now maintained by JustBru00. For bug reports and the latest releases, please check out the GitHub page at: https://github.com/JustBru00/PigStops");
     }
 
     private void setupCommands() {

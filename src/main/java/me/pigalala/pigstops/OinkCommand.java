@@ -5,8 +5,8 @@ import co.aikar.commands.BukkitCommandExecutionContext;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.annotation.*;
 import co.aikar.commands.contexts.ContextResolver;
-import me.makkuusen.timing.system.TPlayer;
 import me.makkuusen.timing.system.api.TimingSystemAPI;
+import me.makkuusen.timing.system.tplayer.TPlayer;
 import me.pigalala.pigstops.pit.management.pitmodes.Pit;
 import me.pigalala.pigstops.pit.management.*;
 import org.bukkit.Material;
@@ -86,7 +86,7 @@ public class OinkCommand extends BaseCommand {
             pp.practiceModeStart.setPitch(pp.getPlayer().getLocation().getPitch());
             TPlayer tPlayer = TimingSystemAPI.getTPlayer(pp.getPlayer().getUniqueId());
             if(!isInBoat(player)) {
-                Boat boat = spawnBoat(pp.practiceModeStart, tPlayer.getBoat(), tPlayer.isChestBoat());
+                Boat boat = spawnBoat(pp.practiceModeStart, tPlayer.getSettings().getBoat(), tPlayer.getSettings().isChestBoat());
                 boat.addPassenger(pp.getPlayer());
             }
         }
