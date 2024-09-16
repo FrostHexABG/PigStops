@@ -9,6 +9,7 @@ import me.makkuusen.timing.system.api.TimingSystemAPI;
 import me.makkuusen.timing.system.tplayer.TPlayer;
 import me.pigalala.pigstops.pit.management.pitmodes.Pit;
 import me.pigalala.pigstops.pit.management.*;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Boat;
@@ -74,14 +75,19 @@ public class OinkCommand extends BaseCommand {
     @Subcommand("practicemode")
     public static void togglePracticeMode(Player player) {
         var maybeDriver = TimingSystemAPI.getDriverFromRunningHeat(player.getUniqueId());
-        if(maybeDriver.isPresent()) {
+        if (maybeDriver.isPresent()) {
             player.sendMessage("§cYou may not do this now");
+            return;
+        }
+
+        if (player.getGameMode().equals(GameMode.SPECTATOR)) {
+            player.sendMessage("§cYou may not do this now. Please change gamemode before entering practice mode.");
             return;
         }
 
         PitPlayer pp = PitPlayer.of(player);
         player.sendMessage("§aPracticeMode has been " + (pp.togglePracticeMode() ? "enabled" : "disabled"));
-        if(pp.isInPracticeMode()) {
+        if (pp.isInPracticeMode()) {
             pp.practiceModeStart = player.getLocation();
             pp.practiceModeStart.setPitch(pp.getPlayer().getLocation().getPitch());
             TPlayer tPlayer = TimingSystemAPI.getTPlayer(pp.getPlayer().getUniqueId());
