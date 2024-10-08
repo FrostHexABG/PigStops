@@ -31,6 +31,12 @@ public class OinkCommand extends BaseCommand {
             player.sendMessage("§cThere is no pit game available. Please inform a server admin.");
             return;
         }
+
+        if (Utils.isPlayerHeatDriver(player)) {
+            player.sendMessage("§cSorry you can't do that while in a race heat.");
+            return;
+        }
+
         PitPlayer.of(player).newPit(Pit.Type.FAKE);
     }
 
@@ -42,6 +48,12 @@ public class OinkCommand extends BaseCommand {
                 player.sendMessage("§cThere is no pit game available. Please inform a server admin.");
                 return;
             }
+
+            if (Utils.isPlayerHeatDriver(player)) {
+                player.sendMessage("§cSorry you can't do that while in a race heat.");
+                return;
+            }
+
             PitPlayer.of(player).newPit(Pit.Type.FAKE);
         } else {
             PitPlayer.of(player).newPit(Pit.Type.FAKE, pitGame);
@@ -74,9 +86,8 @@ public class OinkCommand extends BaseCommand {
 
     @Subcommand("practicemode")
     public static void togglePracticeMode(Player player) {
-        var maybeDriver = TimingSystemAPI.getDriverFromRunningHeat(player.getUniqueId());
-        if (maybeDriver.isPresent()) {
-            player.sendMessage("§cYou may not do this now");
+        if (Utils.isPlayerHeatDriver(player)) {
+            player.sendMessage("§cSorry you can't do that while in a race heat.");
             return;
         }
 
