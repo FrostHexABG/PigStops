@@ -1,6 +1,8 @@
 package me.pigalala.pigstops;
 
+import me.makkuusen.timing.system.api.TimingSystemAPI;
 import me.makkuusen.timing.system.heat.Heat;
+import me.makkuusen.timing.system.participant.Driver;
 import me.pigalala.pigstops.pit.management.PitGame;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -8,11 +10,14 @@ import net.kyori.adventure.text.event.HoverEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import static me.pigalala.pigstops.PigStops.getPlugin;
@@ -78,5 +83,14 @@ public abstract class Utils {
         PigStops.getPlugin().getConfig().set("pitBlock", PigStops.pitBlock.name().toLowerCase());
         PigStops.getPlugin().saveConfig();
         PigStops.getPlugin().reloadConfig();
+    }
+
+    public static boolean isPlayerHeatDriver(UUID uuid) {
+        Optional<Driver> driver = TimingSystemAPI.getDriverFromRunningHeat(uuid);
+        return driver.isPresent();
+    }
+
+    public static boolean isPlayerHeatDriver(Player p) {
+        return isPlayerHeatDriver(p.getUniqueId());
     }
 }
